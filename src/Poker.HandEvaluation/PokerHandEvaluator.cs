@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using BluffinMuffin.Poker.HandEvaluation.Contracts;
+using BluffinMuffin.Poker.HandEvaluation.Services;
 
 namespace BluffinMuffin.Poker.HandEvaluation
 {
     public interface IPokerHandEvaluator
     {
-        object EvaluateCardsOfPlayers(IEnumerable<IPlayerCards> players, IEvaluationOptions options = null);
+        IEnumerable<RankedPlayerWithBestCards<T>> EvaluateCardsOfPlayers<T>(IEnumerable<T> players, IEvaluationOptions options = null) where T : IPlayerCards;
     }
     public class PokerHandEvaluator : IPokerHandEvaluator
     {
-        public object EvaluateCardsOfPlayers(IEnumerable<IPlayerCards> players, IEvaluationOptions options = null)
+        private readonly IPlayerService _playerService;
+
+        public PokerHandEvaluator(IPlayerService playerService)
+        {
+            _playerService = playerService;
+        }
+
+        public IEnumerable<RankedPlayerWithBestCards<T>> EvaluateCardsOfPlayers<T>(IEnumerable<T> players, IEvaluationOptions options = null) where T : IPlayerCards
         {
             var allPlayers = players?.ToArray();
             if (allPlayers == null || !allPlayers.Any())
                 throw new ArgumentNullException(nameof(players));
 
-            var evaluationOptions = options ?? new DefaultEvaluationOptions();
-
-            throw new System.NotImplementedException();
+            return _playerService.Rank(_playerService.Sort(allPlayers, options ?? new DefaultEvaluationOptions()));
         }
     }
 }
