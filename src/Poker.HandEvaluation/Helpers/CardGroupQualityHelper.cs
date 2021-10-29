@@ -1,18 +1,17 @@
 ﻿using BluffinMuffin.Poker.Common.Contract;
-using BluffinMuffin.Poker.HandEvaluation.Contracts;
 
 namespace BluffinMuffin.Poker.HandEvaluation.Helpers
 {
     public interface ICardGroupQualityHelper
     {
-        int Compare(CardGroupQualityEnum x, CardGroupQualityEnum y, IEvaluationOptions options);
+        int Compare(CardGroupQualityEnum x, CardGroupQualityEnum y, bool flushBeatsFullHouse);
     }
     public class CardGroupQualityHelper : ICardGroupQualityHelper
     {
-        public int Compare(CardGroupQualityEnum x, CardGroupQualityEnum y, IEvaluationOptions options)
+        public int Compare(CardGroupQualityEnum x, CardGroupQualityEnum y, bool flushBeatsFullHouse)
         {
             var res = x.CompareTo(y);
-            if (options.FlushBeatsFullHouse)
+            if (flushBeatsFullHouse)
             {
                 if (x == CardGroupQualityEnum.Flush && y == CardGroupQualityEnum.FullHouse)
                     return 1;
