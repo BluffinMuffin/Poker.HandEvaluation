@@ -6,7 +6,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.QualityEvaluators
 {
     public interface IQualityEvaluatorFactory
     {
-        ClassifiedCards Evaluate(CardGroupQualityEnum quality, IPlayerCards player, IEvaluationOptions options);
+        ClassifiedCards Evaluate(CardGroupQualityEnum quality, IEnumerable<ICard> cards, IEvaluationOptions options);
     }
     public class QualityEvaluatorFactory : IQualityEvaluatorFactory
     {
@@ -40,19 +40,19 @@ namespace BluffinMuffin.Poker.HandEvaluation.QualityEvaluators
             _qualityEvaluatorFourOfAKind = qualityEvaluatorFourOfAKind;
             _qualityEvaluatorStraightFlush = qualityEvaluatorStraightFlush;
         }
-        public ClassifiedCards Evaluate(CardGroupQualityEnum quality, IPlayerCards player, IEvaluationOptions options)
+        public ClassifiedCards Evaluate(CardGroupQualityEnum quality, IEnumerable<ICard> cards, IEvaluationOptions options)
         {
             switch (quality)
             {
-                case CardGroupQualityEnum.HighCard: return _qualityEvaluatorHighCard.Evaluate(player, options);
-                case CardGroupQualityEnum.OnePair: return _qualityEvaluatorOnePair.Evaluate(player, options);
-                case CardGroupQualityEnum.TwoPairs: return _qualityEvaluatorTwoPairs.Evaluate(player, options);
-                case CardGroupQualityEnum.ThreeOfAKind: return _qualityEvaluatorThreeOfAKind.Evaluate(player, options);
-                case CardGroupQualityEnum.Straight: return _qualityEvaluatorStraight.Evaluate(player, options);
-                case CardGroupQualityEnum.Flush: return _qualityEvaluatorFlush.Evaluate(player, options);
-                case CardGroupQualityEnum.FullHouse: return _qualityEvaluatorFullHouse.Evaluate(player, options);
-                case CardGroupQualityEnum.FourOfAKind: return _qualityEvaluatorFourOfAKind.Evaluate(player, options);
-                case CardGroupQualityEnum.StraightFlush: return _qualityEvaluatorStraightFlush.Evaluate(player, options);
+                case CardGroupQualityEnum.HighCard: return _qualityEvaluatorHighCard.Evaluate(cards, options);
+                case CardGroupQualityEnum.OnePair: return _qualityEvaluatorOnePair.Evaluate(cards, options);
+                case CardGroupQualityEnum.TwoPairs: return _qualityEvaluatorTwoPairs.Evaluate(cards, options);
+                case CardGroupQualityEnum.ThreeOfAKind: return _qualityEvaluatorThreeOfAKind.Evaluate(cards, options);
+                case CardGroupQualityEnum.Straight: return _qualityEvaluatorStraight.Evaluate(cards, options);
+                case CardGroupQualityEnum.Flush: return _qualityEvaluatorFlush.Evaluate(cards, options);
+                case CardGroupQualityEnum.FullHouse: return _qualityEvaluatorFullHouse.Evaluate(cards, options);
+                case CardGroupQualityEnum.FourOfAKind: return _qualityEvaluatorFourOfAKind.Evaluate(cards, options);
+                case CardGroupQualityEnum.StraightFlush: return _qualityEvaluatorStraightFlush.Evaluate(cards, options);
                 default:
                     throw new KeyNotFoundException($"Quality '{quality}' has no evaluator");
             }
