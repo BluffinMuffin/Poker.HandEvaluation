@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using BluffinMuffin.Poker.HandEvaluation.Builders;
+using BluffinMuffin.Poker.HandEvaluation.CardSelectors;
 using BluffinMuffin.Poker.HandEvaluation.Helpers;
 using BluffinMuffin.Poker.HandEvaluation.QualityEvaluators;
 using BluffinMuffin.Poker.HandEvaluation.Services;
@@ -15,7 +16,13 @@ namespace BluffinMuffin.Poker.HandEvaluation
             Register<IPokerHandEvaluator, PokerHandEvaluator>();
 
             Register<IBestCardsOfPlayerBuilder, BestCardsOfPlayerBuilder>();
+            Register<IClassifiedCardsBuilder, ClassifiedCardsBuilder>();
             Register<IClassifiedCardsOfPlayerBuilder, ClassifiedCardsOfPlayerBuilder>();
+
+            Register<ICardSelectorFactory, CardSelectorFactory>();
+            Register<CardSelectorAllCards>();
+            Register<CardSelectorBest2InHandBest3OnTable>();
+            Register<CardSelectorOnlyHand>();
 
             Register<IClassifiedCardsHelper, ClassifiedCardsHelper>();
             Register<ICardGroupQualityHelper, CardGroupQualityHelper>();

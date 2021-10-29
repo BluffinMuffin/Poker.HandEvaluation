@@ -10,7 +10,8 @@ namespace BluffinMuffin.Poker.HandEvaluation.Contracts
         private readonly IEvaluationOptions _options;
         private readonly IClassifiedCardsHelper _classifiedCardsHelper;
         public CardGroupQualityEnum Quality { get; set; }
-        public IEnumerable<ICard> Cards { get; set; }
+        public IEnumerable<ICard> ConcernedCards { get; set; }
+        public IEnumerable<ICard> RemainingCards { get; set; }
 
         public ClassifiedCards(IEvaluationOptions options, IClassifiedCardsHelper classifiedCardsHelper)
         {
