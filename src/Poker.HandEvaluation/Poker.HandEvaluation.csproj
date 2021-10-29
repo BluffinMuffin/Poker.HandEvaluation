@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>BluffinMuffin.Poker.HandEvaluation</AssemblyName>
+    <RootNamespace>BluffinMuffin.Poker.HandEvaluation</RootNamespace>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <Authors>Ericmas001</Authors>
+    <Description>BluffinMuffin.Poker.HandEvaluation</Description>
+    <Copyright>Ericmas001</Copyright>
+    <PackageReleaseNotes>Development Version</PackageReleaseNotes>
+    <PackageIcon>logo-small.png</PackageIcon>
+    <PackageIconUrl>https://github.com/BluffinMuffin/Common/raw/main/Logo/logo-small.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/BluffinMuffin/Poker.HandEvaluation</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="_Nuget\logo-small.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BluffinMuffin.Poker.Common" Version="0.1.0" />
+    <PackageReference Include="Com.Ericmas001.Common" Version="0.5.1" />
+    <PackageReference Include="Com.Ericmas001.DependencyInjection" Version="6.1.2" />
+  </ItemGroup>
+
+</Project>
