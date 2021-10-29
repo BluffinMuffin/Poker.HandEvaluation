@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using BluffinMuffin.Poker.Common.Contract;
 using Com.Ericmas001.Common;
-using Poker.Common.Contract;
 
 namespace BluffinMuffin.Poker.HandEvaluation.Contracts
 {

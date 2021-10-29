@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Poker.Common.Contract;
+using BluffinMuffin.Poker.Common.Contract;
 
 namespace BluffinMuffin.Poker.HandEvaluation.Contracts
 {
