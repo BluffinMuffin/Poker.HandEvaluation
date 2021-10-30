@@ -33,7 +33,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.QualityEvaluators
 
             var concerned = pairs[0].Concat(pairs[1]).ToArray();
 
-            return _classifiedCardsBuilder.Build(concerned, CardGroupQualityEnum.TwoPairs, options, allCards.Except(concerned).OrderByDescending(x => x).Take(1));
+            return _classifiedCardsBuilder.Build(concerned, CardGroupQualityEnum.TwoPairs, options, allCards.Except(concerned).OrderByDescending(x => x.Value).Take(1));
         }
     }
 }

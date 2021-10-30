@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BluffinMuffin.Poker.Common" Version="0.2.0" />
+    <PackageReference Include="BluffinMuffin.Poker.Common" Version="0.2.1" />
     <PackageReference Include="Com.Ericmas001.Common" Version="0.5.1" />
     <PackageReference Include="Com.Ericmas001.DependencyInjection" Version="6.1.2" />
   </ItemGroup>

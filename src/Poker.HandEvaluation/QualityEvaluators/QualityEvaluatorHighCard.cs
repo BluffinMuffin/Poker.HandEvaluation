@@ -18,7 +18,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.QualityEvaluators
 
         public ClassifiedCards Evaluate(IEnumerable<ICard> cards, IEvaluationOptions options)
         {
-            var allCards = cards?.OrderByDescending(x => x).ToArray();
+            var allCards = cards?.OrderByDescending(x => x.Value).ToArray();
             if (allCards == null || !allCards.Any())
                 throw new ArgumentNullException(nameof(cards));
 

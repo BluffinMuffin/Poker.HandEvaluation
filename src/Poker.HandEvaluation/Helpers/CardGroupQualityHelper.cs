@@ -33,18 +33,25 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
         {
             if (cards == null) return null;
 
-            return (cards
-                    .GroupBy(x => x.Suit)
-                    .SingleOrDefault(x => x.Count() == 5) ?? new ICard[0].AsEnumerable())
-                .OrderByDescending(x => x);
+            var flush = cards
+                        .GroupBy(x => x.Suit)
+                        .SingleOrDefault(x => x.Count() == 5);
+
+            if (flush == null)
+                return null;
+
+            return flush.OrderByDescending(x => x.Value);
         }
 
         public IEnumerable<ICard> StraightIfExists(IEnumerable<ICard> cards, bool aceCanBeUsedAsOneInStraights)
         {
-            var allCards = cards?.OrderByDescending(x => x).ToArray();
+            var allCards = cards?.OrderByDescending(x => x.Value).ToArray();
             if (allCards == null) return null;
 
-            if (allCards[0].Value - allCards[4].Value == 4)
+            if (allCards[0].Value - allCards[4].Value == 4 &&
+                allCards[0].Value - allCards[3].Value == 3 &&
+                allCards[0].Value - allCards[2].Value == 2 &&
+                allCards[0].Value - allCards[1].Value == 1)
                 return allCards;
 
             if (aceCanBeUsedAsOneInStraights && allCards[0].Value == CardValueEnum.Ace
@@ -82,7 +89,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
             return cards
                    .GroupBy(x => x.Value)
                    .Where(x => x.Count() == 2)
-                   .OrderByDescending(x => x.First());
+                   .OrderByDescending(x => x.First().Value);
         }
     }
 }

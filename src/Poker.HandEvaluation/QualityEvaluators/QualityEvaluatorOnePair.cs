@@ -32,7 +32,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.QualityEvaluators
             if (two == null)
                 return null;
 
-            return _classifiedCardsBuilder.Build(two, CardGroupQualityEnum.OnePair, options, allCards.Except(two).OrderByDescending(x => x).Take(3));
+            return _classifiedCardsBuilder.Build(two, CardGroupQualityEnum.OnePair, options, allCards.Except(two).OrderByDescending(x => x.Value).Take(3));
         }
     }
 }

@@ -28,9 +28,11 @@ namespace BluffinMuffin.Poker.HandEvaluation.QualityEvaluators
             if (options == null) throw new ArgumentNullException(nameof(options));
 
             var three = _cardGroupQualityHelper.ThreeOfAKindIfExists(allCards)?.ToArray();
-            var two = _cardGroupQualityHelper.AllPairs(allCards).SingleOrDefault()?.ToArray();
+            if (three == null)
+                return null;
 
-            if (three == null || two == null)
+            var two = _cardGroupQualityHelper.AllPairs(allCards).SingleOrDefault()?.ToArray();
+            if (two == null)
                 return null;
 
             return _classifiedCardsBuilder.Build(three.Concat(two), CardGroupQualityEnum.FullHouse, options);

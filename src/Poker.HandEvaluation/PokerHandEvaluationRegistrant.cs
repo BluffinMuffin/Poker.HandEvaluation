@@ -34,6 +34,7 @@ namespace BluffinMuffin.Poker.HandEvaluation
             Register<QualityEvaluatorFullHouse>();
             Register<QualityEvaluatorHighCard>();
             Register<QualityEvaluatorOnePair>();
+            Register<QualityEvaluatorRoyalFlush>();
             Register<QualityEvaluatorStraight>();
             Register<QualityEvaluatorStraightFlush>();
             Register<QualityEvaluatorThreeOfAKind>();

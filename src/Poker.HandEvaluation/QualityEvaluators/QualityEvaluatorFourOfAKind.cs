@@ -31,7 +31,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.QualityEvaluators
             if (four == null)
                 return null;
 
-            return _classifiedCardsBuilder.Build(four, CardGroupQualityEnum.FourOfAKind, options, allCards.Except(four).OrderByDescending(x => x).Take(1));
+            return _classifiedCardsBuilder.Build(four, CardGroupQualityEnum.FourOfAKind, options, allCards.Except(four).OrderByDescending(x => x.Value).Take(1));
         }
     }
 }

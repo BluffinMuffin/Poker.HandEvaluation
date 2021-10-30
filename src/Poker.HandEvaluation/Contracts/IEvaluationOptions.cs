@@ -9,7 +9,6 @@ namespace BluffinMuffin.Poker.HandEvaluation.Contracts
         bool FlushBeatsFullHouse { get; }
         bool AceCanBeUsedAsOneInStraights { get; }
         EvaluationCardSelectorEnum CardSelector { get; }
-        IEnumerable<CardValueEnum> CardValuesUsed { get; }
         IEnumerable<CardGroupQualityEnum> CardGroupQualityAvailable { get; }
     }
 }
