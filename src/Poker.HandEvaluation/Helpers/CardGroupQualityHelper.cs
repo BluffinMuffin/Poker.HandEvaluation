@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BluffinMuffin.Poker.Common.Contract;
 
@@ -9,6 +8,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
     {
         int Compare(CardGroupQualityEnum x, CardGroupQualityEnum y, bool flushBeatsFullHouse);
         IEnumerable<ICard> FlushIfExists(IEnumerable<ICard> cards);
+        IEnumerable<ICard> StraightIfExists(IEnumerable<ICard> cards, bool aceCanBeUsedAsOneInStraights);
         IEnumerable<ICard> FourOfAKindIfExists(IEnumerable<ICard> cards);
         IEnumerable<ICard> ThreeOfAKindIfExists(IEnumerable<ICard> cards);
         IEnumerable<IEnumerable<ICard>> AllPairs(IEnumerable<ICard> cards);
@@ -31,7 +31,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
 
         public IEnumerable<ICard> FlushIfExists(IEnumerable<ICard> cards)
         {
-            if (cards == null) throw new ArgumentNullException(nameof(cards));
+            if (cards == null) return null;
 
             return (cards
                     .GroupBy(x => x.Suit)
@@ -39,9 +39,27 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
                 .OrderByDescending(x => x);
         }
 
+        public IEnumerable<ICard> StraightIfExists(IEnumerable<ICard> cards, bool aceCanBeUsedAsOneInStraights)
+        {
+            var allCards = cards?.OrderByDescending(x => x).ToArray();
+            if (allCards == null) return null;
+
+            if (allCards[0].Value - allCards[4].Value == 4)
+                return allCards;
+
+            if (aceCanBeUsedAsOneInStraights && allCards[0].Value == CardValueEnum.Ace
+                                             && allCards[4].Value == CardValueEnum.Two
+                                             && allCards[3].Value == CardValueEnum.Three
+                                             && allCards[2].Value == CardValueEnum.Four
+                                             && allCards[1].Value == CardValueEnum.Five)
+                return allCards.Skip(1).Concat(allCards.Take(1));
+
+            return null;
+        }
+
         public IEnumerable<ICard> FourOfAKindIfExists(IEnumerable<ICard> cards)
         {
-            if (cards == null) throw new ArgumentNullException(nameof(cards));
+            if (cards == null) return null;
 
             return cards
                    .GroupBy(x => x.Value)
@@ -50,7 +68,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
 
         public IEnumerable<ICard> ThreeOfAKindIfExists(IEnumerable<ICard> cards)
         {
-            if (cards == null) throw new ArgumentNullException(nameof(cards));
+            if (cards == null) return null;
 
             return cards
                    .GroupBy(x => x.Value)
@@ -59,7 +77,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
 
         public IEnumerable<IEnumerable<ICard>> AllPairs(IEnumerable<ICard> cards)
         {
-            if (cards == null) throw new ArgumentNullException(nameof(cards));
+            if (cards == null) return null;
 
             return cards
                    .GroupBy(x => x.Value)

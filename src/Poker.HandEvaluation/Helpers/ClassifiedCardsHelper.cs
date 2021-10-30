@@ -22,14 +22,14 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
         public int Compare(ClassifiedCards x, ClassifiedCards y, IEvaluationOptions options)
         {
             if (ReferenceEquals(x, y)) return 0;
-            if (ReferenceEquals(null, y) || y.ConcernedCards == null || !y.ConcernedCards.Any()) return 1;
-            if (ReferenceEquals(null, x) || x.ConcernedCards == null || !x.ConcernedCards.Any()) return -1;
+            if (ReferenceEquals(null, y) || y.Cards == null || !y.Cards.Any()) return 1;
+            if (ReferenceEquals(null, x) || x.Cards == null || !x.Cards.Any()) return -1;
 
             if (x.Quality != y.Quality)
                 return _cardGroupQualityHelper.Compare(x.Quality, y.Quality, options.FlushBeatsFullHouse);
 
-            var xCards = x.ConcernedCards.ToArray();
-            var yCards = y.ConcernedCards.ToArray();
+            var xCards = x.Cards.ToArray();
+            var yCards = y.Cards.ToArray();
 
             for (int i = 0; i < Math.Min(xCards.Length, yCards.Length); ++i)
             {

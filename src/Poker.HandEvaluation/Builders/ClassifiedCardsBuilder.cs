@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BluffinMuffin.Poker.Common.Contract;
 using BluffinMuffin.Poker.HandEvaluation.Contracts;
 using BluffinMuffin.Poker.HandEvaluation.Helpers;
@@ -26,8 +27,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.Builders
             return new ClassifiedCards(options, _classifiedCardsHelper)
             {
                 Quality = quality,
-                ConcernedCards = concernedCards,
-                RemainingCards = remainingCards ?? new ICard[0]
+                Cards = concernedCards.Concat(remainingCards ?? new ICard[0])
             };
         }
     }
