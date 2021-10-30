@@ -8,9 +8,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
     public interface ICardHelper
     {
         int Compare(ICard x, ICard y, bool suitRankingActivated);
-        IEnumerable<IEnumerable<ICard>> AllCombinationsOf5(IEnumerable<ICard> deck);
-        IEnumerable<IEnumerable<ICard>> AllCombinationsOf3(IEnumerable<ICard> deck);
-        IEnumerable<IEnumerable<ICard>> AllCombinationsOf2(IEnumerable<ICard> deck);
+        IEnumerable<IEnumerable<ICard>> AllCombinations(IEnumerable<ICard> deck, int nbCards);
     }
     public class CardHelper : ICardHelper
     {
@@ -23,39 +21,23 @@ namespace BluffinMuffin.Poker.HandEvaluation.Helpers
 
             return res;
         }
-        public IEnumerable<IEnumerable<ICard>> AllCombinationsOf5(IEnumerable<ICard> deck)
+        public IEnumerable<IEnumerable<ICard>> AllCombinations(IEnumerable<ICard> deck, int nbCards)
         {
-            var cards = deck?.ToArray();
-            if (cards == null || cards.Length < 5)
+            var allCards = deck?.ToArray();
+            if (allCards == null || allCards.Length < nbCards)
                 throw new ArgumentNullException(nameof(deck));
 
-            for (int a = 0; a < cards.Length; ++a)
-                for (int b = a + 1; b < cards.Length; ++b)
-                    for (int c = b + 1; c < cards.Length; ++c)
-                        for (int d = c + 1; d < cards.Length; ++d)
-                            for (int e = d + 1; e < cards.Length; ++e)
-                                yield return new[] { cards[a], cards[b], cards[c], cards[d], cards[e] };
-        }
-        public IEnumerable<IEnumerable<ICard>> AllCombinationsOf3(IEnumerable<ICard> deck)
-        {
-            var cards = deck?.ToArray();
-            if (cards == null || cards.Length < 3)
-                throw new ArgumentNullException(nameof(deck));
+            return Possibilities(allCards, 0, nbCards);
 
-            for (int a = 0; a < cards.Length; ++a)
-                for (int b = a + 1; b < cards.Length; ++b)
-                    for (int c = b + 1; c < cards.Length; ++c)
-                        yield return new[] { cards[a], cards[b], cards[c] };
-        }
-        public IEnumerable<IEnumerable<ICard>> AllCombinationsOf2(IEnumerable<ICard> deck)
-        {
-            var cards = deck?.ToArray();
-            if (cards == null || cards.Length < 2)
-                throw new ArgumentNullException(nameof(deck));
-
-            for (int a = 0; a < cards.Length; ++a)
-                for (int b = a + 1; b < cards.Length; ++b)
-                    yield return new[] { cards[a], cards[b] };
+            IEnumerable<IEnumerable<ICard>> Possibilities(ICard[] cards, int start, int remaining)
+            {
+                for (int i = start; i < cards.Length; ++i)
+                    if (remaining == 1)
+                        yield return new[] { cards[i] };
+                    else
+                        foreach (var c in Possibilities(cards, i + 1, remaining - 1))
+                            yield return new[] { cards[i] }.Concat(c);
+            }
         }
     }
 }

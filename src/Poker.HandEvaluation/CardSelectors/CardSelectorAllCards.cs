@@ -17,7 +17,7 @@ namespace BluffinMuffin.Poker.HandEvaluation.CardSelectors
 
         public IEnumerable<IEnumerable<ICard>> SelectCards(IPlayerCards player)
         {
-            return _cardHelper.AllCombinationsOf5(player.HandCards.Concat(player.TableCards));
+            return _cardHelper.AllCombinations(player.HandCards.Concat(player.TableCards), 5);
         }
     }
 }
