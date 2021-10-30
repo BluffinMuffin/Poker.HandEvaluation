@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BluffinMuffin.Poker.Common.Contract;
 using BluffinMuffin.Poker.HandEvaluation.Contracts;
@@ -21,8 +22,8 @@ namespace BluffinMuffin.Poker.HandEvaluation.Builders
 
         public ClassifiedCards Build(IEnumerable<ICard> concernedCards, CardGroupQualityEnum quality, IEvaluationOptions options, IEnumerable<ICard> remainingCards = null)
         {
-            if (concernedCards == null)
-                return null;
+            if (concernedCards == null) return null;
+            if (options == null) throw new ArgumentNullException(nameof(options));
 
             return new ClassifiedCards(options, _classifiedCardsHelper)
             {

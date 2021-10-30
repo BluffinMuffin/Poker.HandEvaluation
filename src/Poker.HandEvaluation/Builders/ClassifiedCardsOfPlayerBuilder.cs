@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BluffinMuffin.Poker.HandEvaluation.CardSelectors;
 using BluffinMuffin.Poker.HandEvaluation.Contracts;
 using BluffinMuffin.Poker.HandEvaluation.QualityEvaluators;
@@ -22,14 +23,17 @@ namespace BluffinMuffin.Poker.HandEvaluation.Builders
 
         public ClassifiedCardsOfPlayer<T> Build<T>(T player, IEvaluationOptions options) where T : IPlayerCards
         {
-            var selectedCards = _cardSelectorFactory.SelectCards(options.CardSelector, player);
+            if (player == null) throw new ArgumentNullException(nameof(player));
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             return new ClassifiedCardsOfPlayer<T>
             {
                 Player = player,
-                ClassifiedCards = selectedCards.SelectMany(sc => options.CardGroupQualityAvailable
-                                                                        .Select(q => _qualityEvaluatorFactory.Evaluate(q, sc, options))
-                                                                        .Where(x => x != null))
-                                               .ToArray()
+                ClassifiedCards = _cardSelectorFactory.SelectCards(options.CardSelector, player)
+                                                      .SelectMany(sc => options.CardGroupQualityAvailable
+                                                                               .Select(q => _qualityEvaluatorFactory.Evaluate(q, sc, options))
+                                                                               .Where(x => x != null))
+                                                      .ToArray()
             };
         }
     }

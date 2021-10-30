@@ -4,6 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>BluffinMuffin.Poker.HandEvaluation.Tests.DatasetEvaluation</AssemblyName>
+
+    <RootNamespace>BluffinMuffin.Poker.HandEvaluation.Tests.DatasetEvaluation</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

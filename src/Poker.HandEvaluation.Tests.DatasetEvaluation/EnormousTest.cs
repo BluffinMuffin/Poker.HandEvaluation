@@ -7,28 +7,26 @@ using System.Security.Cryptography;
 using BluffinMuffin.Poker.Common;
 using BluffinMuffin.Poker.Common.Contract;
 using BluffinMuffin.Poker.Common.Helpers;
-using BluffinMuffin.Poker.HandEvaluation;
 using BluffinMuffin.Poker.HandEvaluation.Contracts;
 using BluffinMuffin.Poker.HandEvaluation.Services;
 using Com.Ericmas001.DependencyInjection.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
 
-namespace Poker.HandEvaluation.DatasetTest
+namespace BluffinMuffin.Poker.HandEvaluation.Tests.DatasetEvaluation
 {
     [TestClass]
     public class EnormousTest
     {
-        private UnityContainer _container;
-        private IStringCardHelper _stringCardHelper;
-        private IPlayerService _playerService;
+        private readonly IStringCardHelper _stringCardHelper;
+        private readonly IPlayerService _playerService;
         public EnormousTest()
         {
-            _container = new UnityContainer();
-            new PokerCommonRegistrant().RegisterTypes(_container, null);
-            new PokerHandEvaluationRegistrant().RegisterTypes(_container, null);
-            _stringCardHelper = _container.Resolve<IStringCardHelper>();
-            _playerService = _container.Resolve<IPlayerService>();
+            var container = new UnityContainer();
+            new PokerCommonRegistrant().RegisterTypes(container, null);
+            new PokerHandEvaluationRegistrant().RegisterTypes(container, null);
+            _stringCardHelper = container.Resolve<IStringCardHelper>();
+            _playerService = container.Resolve<IPlayerService>();
         }
         private static readonly string[] _values = { "", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
         private static readonly string[] _suits = { "", "H", "S", "D", "C" };
@@ -45,7 +43,7 @@ namespace Poker.HandEvaluation.DatasetTest
             var coolNumber = RandomNumberGenerator.GetInt32(DIVISOR);
             var options = new DefaultEvaluationOptions();
             var exceptions = new List<Exception>();
-            var lines = File.ReadAllLines(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", "poker-hand-testing.data"));
+            var lines = File.ReadAllLines(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "Data", "poker-hand-testing.data"));
             for (int i = 0; i < lines.Length; ++i)
             {
                 if (i % DIVISOR != coolNumber)
