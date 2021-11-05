@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BluffinMuffin.Poker.Common.Contract;
 using BluffinMuffin.Poker.HandEvaluation.Contracts;
 using BluffinMuffin.Poker.HandEvaluation.Helpers;
@@ -16,6 +17,8 @@ namespace BluffinMuffin.Poker.HandEvaluation.CardSelectors
 
         public IEnumerable<IEnumerable<ICard>> SelectCards(IPlayerCards player)
         {
+            if (player == null) throw new ArgumentNullException(nameof(player));
+
             return _cardHelper.AllCombinations(player.HandCards, 5);
         }
     }
